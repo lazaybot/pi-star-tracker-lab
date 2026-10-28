@@ -1,7 +1,46 @@
 # Pi Star Tracker Lab
 
-A Raspberry Pi-oriented spacecraft attitude-determination laboratory with a
-calibrated synthetic star-field generator and testable three-axis estimator.
+## What this project does
+
+A spacecraft cannot use GPS to determine which direction its camera, antenna,
+or solar panels are pointing. A star tracker solves that problem by taking a
+picture of the sky, recognizing the pattern of stars, and calculating the
+spacecraft's orientation. This project builds and tests that process in Python
+with synthetic camera images designed for eventual Raspberry Pi use.
+
+“Lost-in-space” means the software receives a star image with **no starting
+guess** about where the camera is pointing. It compares small star triangles
+with a catalog, tests the possible matches, rejects false bright spots, and
+selects the orientation that explains the most observed stars.
+
+![Synthetic camera frame and detected-star result](assets/star-tracker-pipeline.svg)
+
+The image above is produced by this repository's real simulation and centroid
+pipeline—not a concept rendering.
+
+## Engineering design
+
+```text
+Synthetic star catalog
+        ↓
+Known test orientation → pinhole camera model → noisy grayscale sensor image
+                                                    ↓
+                                           centroid extraction
+                                                    ↓
+                                  triangle-pattern catalog matching
+                                                    ↓
+                              estimated 3-axis spacecraft orientation
+                                                    ↓
+                                  compare with truth and report error
+```
+
+Design choices:
+
+- **Triangle matching:** triangle side ratios stay the same when the camera rotates.
+- **False-star rejection:** hot pixels and unmatched detections do not decide the answer.
+- **Image-level testing:** the estimator receives extracted centroids, not perfect coordinates.
+- **Repeatable simulation:** fixed random seeds make failures reproducible.
+- **Honest validation:** synthetic performance is reported separately from future sky testing.
 
 NASA describes a star tracker as a camera and computer that compares observed
 star patterns with an onboard catalog to determine spacecraft orientation. This
