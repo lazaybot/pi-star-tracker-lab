@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pi-star-tracker-lab"
+version = "0.1.0"
+description = "Synthetic star-field and spacecraft attitude-determination laboratory"
+requires-python = ">=3.9"
+license = "BSD-3-Clause"
+authors = [{name = "Jaden LyTran"}]
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+
+[project.scripts]
+star-tracker-lab = "star_tracker.cli:main"
+star-tracker-benchmark = "star_tracker.benchmark:main"
+
+[tool.setuptools.packages.find]
+include = ["star_tracker*"]
