@@ -13,7 +13,7 @@ guess** about where the camera is pointing. It compares small star triangles
 with a catalog, tests the possible matches, rejects false bright spots, and
 selects the orientation that explains the most observed stars.
 
-![Synthetic camera frame and detected-star result](assets/star-tracker-pipeline.svg)
+![Synthetic camera frame and detected-star result](assets/star-tracker-pipeline.png)
 
 The image above is produced by this repository's real simulation and centroid
 pipeline—not a concept rendering.
